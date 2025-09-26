@@ -7,7 +7,7 @@ interface RecommendationsProps {
   onNavigate: (page: Page) => void;
 }
 
-type TabType = 'courses' | 'colleges' | 'scholarships';
+type TabType = 'courses' | 'colleges' | 'scholarships'| 'course_details';
 
 const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate }) => {
   const [activeTab, setActiveTab] = useState<TabType>('courses');
@@ -125,9 +125,266 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
       course: 'M.Sc Research',
       requirements: 'GATE/NET qualification',
       scholarships: 'Government fellowships, University grants'
-    }
+    }, 
   ];
-
+  const courseDetails = [
+  {
+    course: "B.E. Computer Science & Engineering (Core syllabus summary)",
+    core_topics: [
+      "Programming Fundamentals (C/C++/Python)",
+      "Data Structures & Algorithms",
+      "Discrete Mathematics",
+      "Computer Organization & Architecture",
+      "Operating Systems",
+      "Database Management Systems",
+      "Software Engineering",
+      "Theory of Computation",
+      "Computer Networks",
+      "Web Technologies (HTML/CSS/JS)",
+      "Machine Learning Basics",
+      "Artificial Intelligence introduction",
+      "Electives: Cloud Computing, Cybersecurity, Mobile App Development",
+      "Project Work & Internship"
+    ]
+  },
+  {
+    course: "B.Tech. Information Technology",
+    core_topics: [
+      "Programming (Python & Java)",
+      "Data Structures & Algorithms",
+      "Database Systems",
+      "Web Development",
+      "Operating Systems",
+      "Computer Networks",
+      "Software Engineering",
+      "Information Security",
+      "Machine Learning fundamentals",
+      "Electives: DevOps, Cloud"
+    ]
+  },
+  {
+    course: "B.E. Electronics & Communication",
+    core_topics: [
+      "Circuit Theory",
+      "Digital Electronics",
+      "Analog Electronics",
+      "Signals & Systems",
+      "Microprocessors & Microcontrollers",
+      "Embedded Systems",
+      "Communication Systems",
+      "VLSI basics",
+      "Electives: IoT, Signal Processing"
+    ]
+  },
+  {
+    course: "B.Tech. Mechanical Engineering",
+    core_topics: [
+      "Engineering Mechanics",
+      "Thermodynamics",
+      "Fluid Mechanics",
+      "Machine Design",
+      "Manufacturing Processes",
+      "Heat Transfer",
+      "CAD/CAM",
+      "Dynamics & Vibrations",
+      "Materials Science",
+      "Electives: Automotive Systems, Robotics"
+    ]
+  },
+  {
+    course: "B.Tech. Civil Engineering",
+    core_topics: [
+      "Strength of Materials",
+      "Structural Analysis",
+      "Concrete Technology",
+      "Geotechnical Engineering",
+      "Surveying",
+      "Hydraulics & Water Resources",
+      "Transportation Engineering",
+      "Construction Management",
+      "Electives: Environmental Engineering, Earthquake Engineering"
+    ]
+  },
+  {
+    course: "B.Sc. Data Science",
+    core_topics: [
+      "Programming (Python/R)",
+      "Statistics & Probability",
+      "Linear Algebra",
+      "Data Wrangling",
+      "Databases & SQL",
+      "Machine Learning",
+      "Data Visualization",
+      "Big Data Technologies (Spark/Hadoop)",
+      "Applied Projects"
+    ]
+  },
+  {
+    course: "B.Sc. Biotechnology",
+    core_topics: [
+      "Cell Biology",
+      "Genetics",
+      "Biochemistry",
+      "Microbiology",
+      "Molecular Biology",
+      "Bioprocess Engineering",
+      "Immunology",
+      "Lab Techniques & Safety",
+      "Electives: Bioinformatics"
+    ]
+  },
+  {
+    course: "MBBS (core subjects summary)",
+    core_topics: [
+      "Anatomy",
+      "Physiology",
+      "Biochemistry",
+      "Pathology",
+      "Microbiology",
+      "Pharmacology",
+      "Forensic Medicine",
+      "Community Medicine",
+      "Medicine, Surgery, Obstetrics & Gynaecology, Pediatrics (clinical postings)",
+      "Internship / Rotatory Internship"
+    ]
+  },
+  {
+    course: "B.Com (Accounting & Finance)",
+    core_topics: [
+      "Financial Accounting",
+      "Corporate Accounting",
+      "Cost Accounting",
+      "Business Law",
+      "Taxation (Direct & Indirect)",
+      "Auditing",
+      "Managerial Economics",
+      "Financial Management",
+      "Electives: E-Commerce, Banking"
+    ]
+  },
+  {
+    course: "B.A. Journalism & Mass Communication",
+    core_topics: [
+      "Media Studies",
+      "Reporting & Editing",
+      "Media Law & Ethics",
+      "Broadcast Journalism",
+      "Digital Media & Social Media",
+      "Photojournalism",
+      "Communication Research Methods",
+      "Practical Projects & Internships"
+    ]
+  },
+  {
+    course: "B.Pharm",
+    core_topics: [
+      "Pharmaceutics",
+      "Pharmacology",
+      "Pharmaceutical Chemistry",
+      "Pharmacognosy",
+      "Dispensing Pharmacy",
+      "Clinical Pharmacy",
+      "Quality Assurance",
+      "Pharmaceutical Biotechnology"
+    ]
+  },
+  {
+    course: "B.Design (UX/UI)",
+    core_topics: [
+      "Design Thinking",
+      "Visual Design Principles",
+      "Interaction Design",
+      "Prototyping & Wireframing",
+      "User Research & Testing",
+      "Front-End Basics (HTML/CSS)",
+      "Portfolio Project"
+    ]
+  },
+  {
+    course: "B.E. Biomedical Engineering",
+    core_topics: [
+      "Human Physiology",
+      "Biomaterials",
+      "Biomedical Instrumentation",
+      "Medical Imaging",
+      "Clinical Engineering",
+      "Signal Processing for Biomedical",
+      "Regulatory & Ethics in Healthcare Tech"
+    ]
+  },
+  {
+    course: "B.Sc. Environmental Science",
+    core_topics: [
+      "Ecology & Biodiversity",
+      "Environmental Chemistry",
+      "Pollution Control",
+      "Environmental Assessment & Impact",
+      "Sustainable Development",
+      "Waste Management",
+      "GIS & Remote Sensing (basic)"
+    ]
+  },
+  {
+    course: "B.Tech. Food Technology",
+    core_topics: [
+      "Food Chemistry",
+      "Food Microbiology",
+      "Food Processing & Preservation",
+      "Food Engineering",
+      "Quality Assurance & Safety",
+      "Packaging Technology",
+      "Electives: Functional Foods, Food Packaging"
+    ]
+  },
+  {
+    course: "B.Sc. Psychology",
+    core_topics: [
+      "Introduction to Psychology",
+      "Developmental Psychology",
+      "Cognitive Psychology",
+      "Abnormal Psychology",
+      "Research Methods & Statistics",
+      "Counseling Techniques",
+      "Electives: Organizational Psychology"
+    ]
+  },
+  {
+    course: "B.Arch (outline)",
+    core_topics: [
+      "Design Studio",
+      "Building Construction",
+      "Architectural History",
+      "Structural Systems for Architecture",
+      "Materials & Methods",
+      "Environmental Systems",
+      "Professional Practice"
+    ]
+  },
+  {
+    course: "BBA - Business Management",
+    core_topics: [
+      "Principles of Management",
+      "Marketing Management",
+      "Financial Accounting",
+      "Organizational Behavior",
+      "Business Law",
+      "Human Resource Management",
+      "Operations Management",
+      "Electives: Business Analytics"
+    ]
+  },
+  {
+    course: "B.Sc. Forensic Science",
+    core_topics: [
+      "Forensic Chemistry",
+      "Forensic Biology",
+      "Crime Scene Investigation",
+      "Toxicology",
+      "Ballistics & Fingerprint Analysis",
+      "Legal Procedures & Evidence Handling"
+    ]
+  }
+]
   const mockColleges = {
     'Tamil Nadu': [
       { name: 'Anna University', location: 'Chennai', nirfRank: 15 },
@@ -148,7 +405,8 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
       { name: 'Kerala University', location: 'Thiruvananthapuram', nirfRank: 65 }
     ]
   };
-
+  
+  
   const mockScholarships = [
     {
       name: 'KVPY Scholarship',
@@ -232,6 +490,36 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
                 <p className="text-sm text-gray-600">
                   <strong>Scholarships:</strong> {option.scholarships}
                 </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* Course_Structure */}
+      <div className="mt-8 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6">
+        <button
+          onClick={() => setExpandedPG(!expandedPG)}
+          className="flex items-center justify-between w-full text-left"
+        >
+          <h3 className="text-xl font-bold text-gray-800">Course Structure</h3>
+          {expandedPG ? (
+            <ChevronUp className="h-5 w-5 text-gray-600" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-600" />
+          )}
+        </button>
+        
+        {expandedPG && (
+          <div className="mt-4 space-y-4">
+            {courseDetails.map((option, index) => (
+              <div key={index} className="bg-white rounded-lg p-4 border-l-4 border-green-500">
+                <h4 className="font-semibold text-gray-800">{option.course}</h4>
+                <p className="text-sm text-gray-600 mt-1">
+                  <strong>Core Topics:</strong> {option.core_topics}
+                </p>
+                {/* <p className="text-sm text-gray-600">
+                  <strong>Scholarships:</strong> {option.scholarships}
+                </p> */}
               </div>
             ))}
           </div>
