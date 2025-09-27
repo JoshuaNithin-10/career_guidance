@@ -12,6 +12,8 @@ type TabType = 'courses' | 'colleges' | 'scholarships'| 'course_details';
 const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate }) => {
   const [activeTab, setActiveTab] = useState<TabType>('courses');
   const [expandedPG, setExpandedPG] = useState(false);
+  // const [activeTab, setActiveTab] = useState<TabType>('structure');
+  const [expandedCourse, setExpandedCourse] = useState(false);
 
   const mockCourses = {
     'Computer Science': [
@@ -498,18 +500,18 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
       {/* Course_Structure */}
       <div className="mt-8 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6">
         <button
-          onClick={() => setExpandedPG(!expandedPG)}
+          onClick={() => setExpandedCourse(!expandedCourse)}
           className="flex items-center justify-between w-full text-left"
         >
           <h3 className="text-xl font-bold text-gray-800">Course Structure</h3>
-          {expandedPG ? (
+          {expandedCourse ? (
             <ChevronUp className="h-5 w-5 text-gray-600" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-600" />
           )}
         </button>
         
-        {expandedPG && (
+        {expandedCourse && (
           <div className="mt-4 space-y-4">
             {courseDetails.map((option, index) => (
               <div key={index} className="bg-white rounded-lg p-4 border-l-4 border-green-500">

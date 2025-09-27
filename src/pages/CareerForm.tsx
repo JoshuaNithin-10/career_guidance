@@ -11,10 +11,11 @@ interface CareerFormProps {
 const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNavigate }) => {
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
-  const states = ['Tamil Nadu', 'Karnataka', 'Kerala', 'Andhra Pradesh', 'Maharashtra', 'Delhi'];
+  const states = ['Tamil Nadu', 'Jammu and Kashmir','Karnataka', 'Kerala', 'Andhra Pradesh', 'Maharashtra', 'Delhi'];
   
   const districts = {
     'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai', 'Salem', 'Trichy'],
+    'Jammu and Kashmir': ['Srinagar', 'Jammu', 'Anantnag', 'Baramulla', 'Kupwara'], 
     'Karnataka': ['Bangalore', 'Mysore', 'Mangalore', 'Hubli', 'Belgaum'],
     'Kerala': ['Kochi', 'Thiruvananthapuram', 'Kozhikode', 'Thrissur', 'Kannur'],
     'Andhra Pradesh': ['Hyderabad', 'Vijayawada', 'Visakhapatnam', 'Guntur', 'Tirupati'],
