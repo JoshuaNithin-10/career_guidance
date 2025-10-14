@@ -33,7 +33,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20">
+      {/* <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20" > 
+        <img src="/bg_carrier.jpeg" alt="Career Background" className="w-full h-auto" />
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
@@ -54,7 +55,36 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </button>
           </div>
         </div>
-      </section>
+      </section> */}
+      <section
+  className="relative bg-cover bg-center bg-no-repeat text-white py-20"
+  style={{ backgroundImage: "url('/bg_carrier.jpeg')" }}
+>
+  {/* Hero Section */}
+  <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <div className="relative container mx-auto px-4">
+    <div className="max-w-4xl mx-auto text-center">
+      <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+        S.P.A.R.K
+      </h1>
+      <h2 className="text-2xl md:text-3xl font-light mb-4 text-blue-100">
+        Smart Path And Right Key
+      </h2>
+      <p className="text-xl md:text-2xl mb-8 text-blue-100">
+        Helping Class 10, 11 & 12 students make smarter career choices
+      </p>
+      <button
+        onClick={() => onNavigate("career-form")}
+        className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center mx-auto group shadow-lg"
+      >
+        Get Started
+        <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+      </button>
+    </div>
+  </div>
+</section>
+
 
       {/* Features Section */}
       <section className="py-16 bg-white">
