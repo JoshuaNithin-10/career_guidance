@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Chatbot from './components/Chatbot';
 import HomePage from './pages/HomePage';
 import CareerForm from './pages/CareerForm';
 import Recommendations from './pages/Recommendations';
@@ -51,8 +50,8 @@ function App() {
                 <p className="text-gray-600 mb-8">Get in touch with our career guidance experts</p>
                 <div className="bg-white p-8 rounded-lg shadow-lg">
                   <p className="text-lg text-gray-700 mb-4">📧 contact@sparkcareer.com</p>
-                  <p className="text-lg text-gray-700 mb-4">📞 +91 9876543210</p>
-                  <p className="text-lg text-gray-700">🏢 123 Education Street, Chennai, Tamil Nadu</p>
+                  <p className="text-lg text-gray-700 mb-4">📞 +91 9381234532</p>
+                  <p className="text-lg text-gray-700">🏢 Thiruvalluvar Nagar,saravanapatti-621035</p>
                 </div>
               </div>
             </div>
@@ -70,7 +69,7 @@ function App() {
         {renderPage()}
       </main>
       <Footer />
-      <Chatbot />
+  
     </div>
   );
 }

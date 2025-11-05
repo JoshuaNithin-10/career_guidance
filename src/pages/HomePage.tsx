@@ -57,15 +57,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section> */}
       <section
-  className="relative bg-cover bg-center bg-no-repeat text-white py-20"
+  className="relative bg-cover bg-center bg-no-repeat text-white py-20  "
   style={{ backgroundImage: "url('/bg_carrier.jpeg')" }}
 >
   {/* Hero Section */}
-  <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+  <div className="absolute inset-0 bg-red bg-opacity-50"></div>
 
   <div className="relative container mx-auto px-4">
     <div className="max-w-4xl mx-auto text-center">
-      <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+      <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight ">
         S.P.A.R.K
       </h1>
       <h2 className="text-2xl md:text-3xl font-light mb-4 text-blue-100">
@@ -117,7 +117,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gray-100 py-16">
+      <section className="bg-gradient-to-r from-blue-500 to-purple-600 py-16">
+
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-3xl font-bold text-gray-800 mb-4">
             Ready to Discover Your Path?
