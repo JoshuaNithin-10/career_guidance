@@ -18,7 +18,7 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
 
-  /* ================= PERFECT APTITUDE QUESTIONS ================= */
+  /* ================= QUESTIONS ================= */
   const questions: AptitudeQuestion[] = [
     {
       question: "All doctors are educated. Some educated people are rich. Which is true?",
@@ -80,166 +80,137 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
     }
   ];
 
-  /* ================= HANDLERS ================= */
   const handleAnswerSelect = (index: string) => {
     const updated = [...answers];
     updated[currentQuestion] = index;
     setAnswers(updated);
   };
 
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    }
-  };
+  const handleNext = () => currentQuestion < questions.length - 1 && setCurrentQuestion(c => c + 1);
+  const handlePrevious = () => currentQuestion > 0 && setCurrentQuestion(c => c - 1);
+  const handleSubmit = () => setShowResults(true);
 
-  const handlePrevious = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
-  };
-
-  const handleSubmit = () => {
-    setShowResults(true);
-  };
-
-  /* ================= SCORING LOGIC ================= */
   const calculateScores = () => {
-    const scores = {
-      logical: 0,
-      numerical: 0,
-      verbal: 0,
-      analytical: 0
-    };
-
+    const scores = { logical: 0, numerical: 0, verbal: 0, analytical: 0 };
     answers.forEach((ans, i) => {
-      if (ans !== undefined) {
-        const selected = parseInt(ans);
-        if (selected === questions[i].correctIndex) {
-          scores[questions[i].category]++;
-        }
+      if (parseInt(ans) === questions[i].correctIndex) {
+        scores[questions[i].category]++;
       }
     });
-
     return scores;
   };
 
-  const getTopCategory = (scores: Record<string, number>) => {
-    return Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-  };
+  const getTopCategory = (scores: Record<string, number>) =>
+    Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
 
-  /* ================= CAREER MAPPING ================= */
   const aptitudeCareerMap = {
     logical: {
       title: "Logical Reasoning",
       streams: ["Software Engineer", "Lawyer", "Cyber Security Analyst"],
-      description:
-        "You excel in reasoning, deductions, and structured thinking."
+      description: "You excel in reasoning, deductions, and structured thinking."
     },
     numerical: {
       title: "Numerical Aptitude",
       streams: ["Engineering", "Data Analyst", "Finance Manager"],
-      description:
-        "You have strong quantitative and numerical problem-solving ability."
+      description: "You have strong quantitative problem-solving skills."
     },
     verbal: {
       title: "Verbal Ability",
       streams: ["Law", "Journalism", "Management"],
-      description:
-        "You understand language, meaning, and communication very well."
+      description: "You have excellent language and communication skills."
     },
     analytical: {
       title: "Analytical Thinking",
       streams: ["Research", "Product Manager", "Strategy Analyst"],
-      description:
-        "You can analyze patterns, systems, and abstract problems effectively."
+      description: "You analyze patterns and abstract problems effectively."
     }
   };
 
-  /* ================= RESULTS VIEW ================= */
+  /* ================= RESULTS ================= */
   if (showResults) {
     const scores = calculateScores();
     const top = getTopCategory(scores) as keyof typeof aptitudeCareerMap;
     const result = aptitudeCareerMap[top];
-
     const totalCorrect = Object.values(scores).reduce((a, b) => a + b, 0);
 
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-zinc-100 py-10 text-zinc-900">
         <div className="max-w-3xl mx-auto px-4">
-          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
-            <CheckCircle className="h-14 w-14 text-green-600 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-green-600 mb-2">
+          <div className="bg-white p-8 rounded-xl shadow-xl text-center">
+            <CheckCircle className="h-14 w-14 text-emerald-500 mx-auto mb-4" />
+
+            <h1 className="text-3xl font-bold text-lime-600 mb-2">
               Test Completed
             </h1>
-            <p className="text-gray-600 mb-6">
-              You answered {totalCorrect} out of {questions.length} correctly
+
+            <p className="text-zinc-600 mb-6">
+              You answered {totalCorrect} / {questions.length} correctly
             </p>
 
-            <h2 className="text-2xl font-bold text-blue-600 mb-2">
+            <h2 className="text-2xl font-bold text-lime-500 mb-2">
               {result.title}
             </h2>
-            <p className="text-gray-600 mb-6">{result.description}</p>
+            <p className="text-zinc-500 mb-6">{result.description}</p>
 
-            <h3 className="font-semibold text-lg mb-3">
-              Recommended Career Streams
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            <div className="grid sm:grid-cols-2 gap-3 mb-6">
               {result.streams.map((s) => (
                 <div
                   key={s}
-                  className="bg-blue-50 border border-blue-200 p-3 rounded"
+                  className="bg-zinc-100 border border-lime-500/30 p-3 rounded-lg text-lime-600"
                 >
                   {s}
                 </div>
               ))}
             </div>
 
-            {/* ====== ALL QUESTIONS + ANSWERS ====== */}
+            {/* REVIEW */}
             <div className="text-left mt-6">
-              <h3 className="text-xl font-bold mb-3">Review Answers</h3>
+              <h3 className="text-xl font-bold mb-4">Answer Review</h3>
 
-              {questions.map((q, idx) => (
-                <div key={idx} className="mb-4 p-4 border rounded-lg">
-                  <p className="font-semibold">{q.question}</p>
+              {questions.map((q, idx) => {
+                const isCorrect = parseInt(answers[idx]) === q.correctIndex;
+                return (
+                  <div
+                    key={idx}
+                    className="mb-4 p-4 rounded-lg border border-zinc-300"
+                  >
+                    <p className="font-semibold mb-2">{q.question}</p>
 
-                  <p className="text-gray-600">
-                    Your answer:{" "}
-                    <span
-                      className={
-                        parseInt(answers[idx]) === q.correctIndex
-                          ? "text-green-600 font-medium"
-                          : "text-red-600 font-medium"
-                      }
-                    >
-                      {q.options[parseInt(answers[idx])]}
-                    </span>
-                  </p>
+                    <p>
+                      Your answer:{' '}
+                      <span className={isCorrect ? 'text-emerald-500' : 'text-rose-500'}>
+                        {q.options[parseInt(answers[idx])]}
+                      </span>
+                    </p>
 
-                  <p className="text-gray-600">
-                    Correct answer:{" "}
-                    <span className="font-medium">
-                      {q.options[q.correctIndex]}
-                    </span>
-                  </p>
-                </div>
-              ))}
+                    {!isCorrect && (
+                      <p className="text-zinc-500">
+                        Correct answer:{' '}
+                        <span className="text-lime-600">
+                          {q.options[q.correctIndex]}
+                        </span>
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="flex justify-center gap-4 mt-6">
               <button
                 onClick={() => onNavigate('recommendations')}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg"
+                className="bg-lime-500 hover:bg-lime-600 text-black px-6 py-3 rounded-lg font-semibold"
               >
                 View Careers
               </button>
+
               <button
                 onClick={() => {
                   setAnswers([]);
                   setCurrentQuestion(0);
                   setShowResults(false);
                 }}
-                className="bg-gray-600 text-white px-6 py-3 rounded-lg"
+                className="bg-zinc-200 hover:bg-zinc-300 text-zinc-900 px-6 py-3 rounded-lg"
               >
                 Retake Test
               </button>
@@ -252,17 +223,15 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
 
   /* ================= QUESTION VIEW ================= */
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-zinc-100 py-10 text-zinc-900">
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-6">
-          <Brain className="h-12 w-12 text-blue-600 mx-auto mb-3" />
-          <h1 className="text-3xl font-bold text-blue-600">Aptitude Test</h1>
-          <p className="text-gray-600">
-            Objective test based on real aptitude skills
-          </p>
+          <Brain className="h-12 w-12 text-lime-600 mx-auto mb-3" />
+          <h1 className="text-3xl font-bold text-lime-600">Aptitude Test</h1>
+          <p className="text-zinc-600">Objective aptitude assessment</p>
         </div>
 
-        <div className="bg-white p-8 rounded-lg shadow-lg">
+        <div className="bg-white p-8 rounded-xl shadow-xl">
           <h2 className="text-xl font-semibold mb-6">
             {questions[currentQuestion].question}
           </h2>
@@ -271,10 +240,10 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
             {questions[currentQuestion].options.map((opt, i) => (
               <label
                 key={i}
-                className={`block p-4 border rounded cursor-pointer ${
+                className={`block p-4 rounded-lg cursor-pointer border transition ${
                   answers[currentQuestion] === i.toString()
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200'
+                    ? 'border-lime-500 bg-lime-500/10'
+                    : 'border-zinc-300 hover:border-zinc-400'
                 }`}
               >
                 <input
@@ -293,7 +262,7 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
           <button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
-            className="bg-gray-600 text-white px-5 py-2 rounded disabled:opacity-40"
+            className="bg-zinc-200 px-5 py-2 rounded disabled:opacity-40"
           >
             <ArrowLeft className="inline h-4 w-4 mr-1" />
             Previous
@@ -303,7 +272,7 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
             <button
               onClick={handleSubmit}
               disabled={!answers[currentQuestion]}
-              className="bg-green-600 text-white px-5 py-2 rounded"
+              className="bg-lime-500 hover:bg-lime-600 text-black px-5 py-2 rounded font-semibold"
             >
               Submit
             </button>
@@ -311,7 +280,7 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
             <button
               onClick={handleNext}
               disabled={!answers[currentQuestion]}
-              className="bg-blue-600 text-white px-5 py-2 rounded"
+              className="bg-lime-500 hover:bg-lime-600 text-black px-5 py-2 rounded font-semibold"
             >
               Next
               <ArrowRight className="inline h-4 w-4 ml-1" />

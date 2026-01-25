@@ -43,15 +43,15 @@ function App() {
         return <ExamUpdates onNavigate={setCurrentPage} />;
       case 'contact':
         return (
-          <div className="min-h-screen bg-gray-50 py-16">
+          <div className="min-h-screen py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-2xl mx-auto text-center">
-                <h1 className="text-4xl font-bold text-blue-600 mb-4">Contact Us</h1>
+                <h1 className="text-4xl font-bold text-green-700 mb-4">Contact Us</h1>
                 <p className="text-gray-600 mb-8">Get in touch with our career guidance experts</p>
                 <div className="bg-white p-8 rounded-lg shadow-lg">
                   <p className="text-lg text-gray-700 mb-4">📧 contact@sparkcareer.com</p>
                   <p className="text-lg text-gray-700 mb-4">📞 +91 9381234532</p>
-                  <p className="text-lg text-gray-700">🏢 Thiruvalluvar Nagar,saravanapatti-621035</p>
+                  <p className="text-lg text-gray-700">🏢 Thiruvalluvar Nagar, Saravanapatti - 621035</p>
                 </div>
               </div>
             </div>
@@ -63,13 +63,10 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-green-50">
       <Navbar currentPage={currentPage} onNavigate={setCurrentPage} />
-      <main>
-        {renderPage()}
-      </main>
+      <main>{renderPage()}</main>
       <Footer />
-  
     </div>
   );
 }

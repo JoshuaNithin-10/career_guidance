@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Page } from '../App';
 
 interface NavbarProps {
@@ -20,71 +21,99 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   ];
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <nav className="bg-zinc-900 sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div 
-            className="flex items-center space-x-2 cursor-pointer hover:text-blue-600 transition-colors"
+
+          {/* LOGO */}
+          <div
             onClick={() => onNavigate('home')}
+            className="flex items-center space-x-3 cursor-pointer group"
           >
-            <Sparkles className="h-8 w-8 text-blue-600" />
-            <div className="text-xl font-bold text-gray-800">
-              S.P.A.R.K
+            <Sparkles className="h-8 w-8 text-lime-400 group-hover:rotate-12 transition-transform" />
+
+            <div className="leading-tight">
+              <div className="text-xl font-bold text-white tracking-wide">
+                S.P.A.R.K
+              </div>
+              <div className="text-xs text-zinc-400 group-hover:text-lime-400 transition-colors">
+                Powered by Athenix
+              </div>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          {/* DESKTOP NAV */}
+          <div className="hidden md:flex space-x-8 relative">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  currentPage === item.id
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                }`}
+                className="relative px-2 py-1 text-sm font-semibold text-zinc-300 hover:text-white transition-colors"
               >
                 {item.label}
+
+                {/* STICKY ACTIVE INDICATOR */}
+                {currentPage === item.id && (
+                  <motion.div
+                    layoutId="active-indicator"
+                    className="absolute left-0 right-0 -bottom-2 h-[3px] bg-lime-400 rounded-full"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 500,
+                      damping: 35,
+                    }}
+                  />
+                )}
               </button>
             ))}
           </div>
 
-          {/* Mobile menu button */}
+          {/* MOBILE MENU BUTTON */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 transition-colors"
+              className="text-zinc-200 hover:text-lime-400 transition-colors"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    onNavigate(item.id);
-                    setIsMenuOpen(false);
-                  }}
-                  className={`px-3 py-2 rounded-md text-sm font-medium text-left transition-colors duration-200 ${
-                    currentPage === item.id
-                      ? 'text-blue-600 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* MOBILE NAV */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="md:hidden overflow-hidden border-t border-zinc-700"
+            >
+              <div className="flex flex-col py-4 space-y-2">
+                {navItems.map((item) => (
+                  <motion.button
+                    key={item.id}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                      onNavigate(item.id);
+                      setIsMenuOpen(false);
+                    }}
+                    className="relative px-4 py-2 text-left text-zinc-300 hover:bg-zinc-800 rounded-md"
+                  >
+                    {/* MOBILE ACTIVE INDICATOR */}
+                    {currentPage === item.id && (
+                      <motion.span
+                        layoutId="mobile-indicator"
+                        className="absolute left-0 top-0 bottom-0 w-1 bg-lime-400 rounded-r"
+                      />
+                    )}
+                    <span className="ml-3 font-semibold">{item.label}</span>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

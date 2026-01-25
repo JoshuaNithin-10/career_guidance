@@ -83,11 +83,11 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
   ];
 
   const examCategories = [
-    { name: 'Engineering', count: 3, color: 'bg-blue-100 text-blue-800' },
-    { name: 'Medical', count: 2, color: 'bg-red-100 text-red-800' },
-    { name: 'Management', count: 1, color: 'bg-green-100 text-green-800' },
-    { name: 'Law', count: 1, color: 'bg-purple-100 text-purple-800' },
-    { name: 'Science/Research', count: 1, color: 'bg-yellow-100 text-yellow-800' }
+    { name: 'Engineering', count: 3, color: 'bg-gradient-to-r from-green-200 to-emerald-200 text-green-800' },
+    { name: 'Medical', count: 2, color: 'bg-gradient-to-r from-emerald-200 to-lime-200 text-emerald-800' },
+    { name: 'Management', count: 1, color: 'bg-gradient-to-r from-lime-200 to-amber-200 text-lime-800' },
+    { name: 'Law', count: 1, color: 'bg-gradient-to-r from-amber-200 to-rose-200 text-amber-800' },
+    { name: 'Science/Research', count: 1, color: 'bg-gradient-to-r from-teal-200 to-cyan-200 text-teal-800' }
   ];
 
   const getStatusColor = (date: string) => {
@@ -95,21 +95,23 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
     const examMonth = new Date(`${date} 1, 2025`).getMonth();
     
     if (examMonth <= currentMonth + 2) {
-      return 'bg-red-100 text-red-800'; // Urgent
+      return 'bg-gradient-to-r from-red-200 to-amber-200 text-red-800';
     } else if (examMonth <= currentMonth + 5) {
-      return 'bg-yellow-100 text-yellow-800'; // Upcoming
+      return 'bg-gradient-to-r from-amber-200 to-yellow-200 text-amber-800';
     } else {
-      return 'bg-green-100 text-green-800'; // Distant
+      return 'bg-gradient-to-r from-green-200 to-emerald-200 text-green-800';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-100 to-white py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
-          <Calendar className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-          <h1 className="text-4xl font-bold text-blue-600 mb-4">Entrance Exam Updates</h1>
+          <Calendar className="h-12 w-12 text-green-600 mx-auto mb-4" />
+          <h1 className="text-4xl font-bold text-green-700 mb-4">
+            Entrance Exam Updates
+          </h1>
           <p className="text-gray-600 text-lg">
             Stay updated with upcoming entrance exams and important dates
           </p>
@@ -129,12 +131,12 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
         </div>
 
         {/* Important Notice */}
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 mb-8">
           <div className="flex items-start">
-            <AlertCircle className="h-5 w-5 text-amber-600 mr-3 mt-0.5" />
+            <AlertCircle className="h-5 w-5 text-green-600 mr-3 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-amber-800 mb-2">Important Notice</h3>
-              <p className="text-amber-700 text-sm">
+              <h3 className="font-semibold text-green-800 mb-2">Important Notice</h3>
+              <p className="text-green-700 text-sm">
                 Registration deadlines are approaching for several exams. Make sure to check official websites for the most up-to-date information and requirements.
               </p>
             </div>
@@ -165,26 +167,26 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
 
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center text-sm text-gray-600">
-                    <Calendar className="h-4 w-4 mr-2 text-blue-500" />
+                    <Calendar className="h-4 w-4 mr-2 text-green-500" />
                     <span><strong>Exam Date:</strong> {exam.date}</span>
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
-                    <Clock className="h-4 w-4 mr-2 text-red-500" />
+                    <Clock className="h-4 w-4 mr-2 text-green-500" />
                     <span><strong>Registration Deadline:</strong> {exam.registrationDeadline}</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <button className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center transition-colors">
+                  <button className="text-green-600 hover:text-green-800 font-medium text-sm flex items-center transition-colors">
                     <ExternalLink className="h-4 w-4 mr-1" />
                     Official Website
                   </button>
                   
                   <div className="flex gap-2">
-                    <button className="bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <button className="bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 text-green-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                       Set Reminder
                     </button>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                       More Details
                     </button>
                   </div>
@@ -195,7 +197,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-12 text-center bg-white rounded-lg shadow-lg p-8">
+        <div className="mt-12 text-center bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-lg p-8">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">
             Need Help Preparing for These Exams?
           </h3>
@@ -205,13 +207,13 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => onNavigate('career-form')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
             >
               Get Career Guidance
             </button>
             <button
               onClick={() => onNavigate('aptitude-test')}
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="bg-gradient-to-r from-emerald-500 to-lime-500 hover:from-emerald-600 hover:to-lime-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
             >
               Take Aptitude Test
             </button>
