@@ -2,13 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot } from 'lucide-react';
 import Groq from "groq-sdk";
 import type { Page } from '../App';
-
-// -----------------------------------------------------------------------------
-// 🔒 SECURE: Reads the key from your .env file
-// -----------------------------------------------------------------------------
 const API_KEY = import.meta.env.VITE_GROQ_API_KEY || "";
-
-// Initialize Groq (Safe mode)
 const groq = new Groq({ 
   apiKey: API_KEY, 
   dangerouslyAllowBrowser: true 
@@ -45,7 +39,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    // 🛑 Security Check: Warn if key is missing
+    
     if (!API_KEY) {
       setMessages(prev => [...prev, { 
         id: Date.now(), 
@@ -56,7 +50,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
       return;
     }
 
-    // 1. Add User Message
+    
     const userMessage: Message = { id: Date.now(), text: input, sender: 'user' };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
@@ -64,21 +58,21 @@ const ChatBot: React.FC<ChatBotProps> = ({ onNavigate }) => {
 
     const lowerInput = userMessage.text.toLowerCase();
 
-    // 2. Navigation Logic
+    
     if (lowerInput.includes('take me to') || lowerInput.includes('navigate') || lowerInput.includes('go to')) {
        if (lowerInput.includes('exam')) { onNavigate('exams'); addBotMessage("Navigated to Exam Updates."); setIsLoading(false); return; }
        if (lowerInput.includes('aptitude') || lowerInput.includes('test')) { onNavigate('aptitude-test'); addBotMessage("Navigated to Aptitude Test."); setIsLoading(false); return; }
        if (lowerInput.includes('career') || lowerInput.includes('form')) { onNavigate('career-form'); addBotMessage("Navigated to Career Form."); setIsLoading(false); return; }
     }
 
-    // 3. AI Logic (Groq)
+   
     try {
       const completion = await groq.chat.completions.create({
         messages: [
           { role: "system", content: "You are a helpful assistant for a student career website named S.P.A.R.K. Answer concisely." },
           { role: "user", content: userMessage.text }
         ],
-        model: "llama-3.3-70b-versatile", // The latest working model
+        model: "llama-3.3-70b-versatile", 
       });
 
       const responseText = completion.choices[0]?.message?.content || "No response.";
