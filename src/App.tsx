@@ -61,7 +61,7 @@ function App() {
       
       <main>{renderPage()}</main>
 
-      {/* ADD CHATBOT HERE */}
+   
       <ChatBot onNavigate={setCurrentPage} />
       
       <Footer />

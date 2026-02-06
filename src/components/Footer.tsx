@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
     <footer className="bg-zinc-900 text-zinc-300 py-12">
       <div className="container mx-auto px-4">
 
-        {/* Top Row */}
+        
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
             <Sparkles className="h-6 w-6 text-lime-400" />
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Divider */}
+       
         <div className="mt-8 pt-8 border-t border-zinc-700 text-center">
           <p className="text-zinc-500 text-sm">
             Helping Class 10, 11 & 12 students make smarter career decisions

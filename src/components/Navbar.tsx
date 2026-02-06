@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
 
-          {/* LOGO */}
+       
           <div
             onClick={() => onNavigate('home')}
             className="flex items-center space-x-3 cursor-pointer group"
@@ -42,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             </div>
           </div>
 
-          {/* DESKTOP NAV */}
+        
           <div className="hidden md:flex space-x-8 relative">
             {navItems.map((item) => (
               <button
@@ -52,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               >
                 {item.label}
 
-                {/* STICKY ACTIVE INDICATOR */}
+                
                 {currentPage === item.id && (
                   <motion.div
                     layoutId="active-indicator"
@@ -68,7 +68,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             ))}
           </div>
 
-          {/* MOBILE MENU BUTTON */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -79,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
         </div>
 
-        {/* MOBILE NAV */}
+      
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -100,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                     }}
                     className="relative px-4 py-2 text-left text-zinc-300 hover:bg-zinc-800 rounded-md"
                   >
-                    {/* MOBILE ACTIVE INDICATOR */}
+                  
                     {currentPage === item.id && (
                       <motion.span
                         layoutId="mobile-indicator"

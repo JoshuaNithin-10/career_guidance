@@ -117,7 +117,6 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {examCategories.map((category, index) => (
             <div key={index} className="bg-white rounded-lg p-4 text-center shadow-lg">
@@ -130,7 +129,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        {/* Important Notice */}
+     
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 mb-8">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-green-600 mr-3 mt-0.5" />
@@ -143,7 +142,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Exams Grid */}
+    
         <div className="grid gap-6">
           {upcomingExams.map((exam, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -196,7 +195,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        {/* CTA Section */}
+       
         <div className="mt-12 text-center bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg shadow-lg p-8">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">
             Need Help Preparing for These Exams?

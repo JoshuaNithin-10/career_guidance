@@ -18,7 +18,7 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
 
-  /* ================= QUESTIONS ================= */
+
   const questions: AptitudeQuestion[] = [
     {
       question: "All doctors are educated. Some educated people are rich. Which is true?",
@@ -126,7 +126,7 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
     }
   };
 
-  /* ================= RESULTS ================= */
+
   if (showResults) {
     const scores = calculateScores();
     const top = getTopCategory(scores) as keyof typeof aptitudeCareerMap;

@@ -264,7 +264,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
         ))}
       </div>
 
-      {/* PG Options Section */}
+     
       <div className="mt-8 bg-gradient-to-r from-lime-50 to-zinc-50 rounded-lg p-6">
         <button
           onClick={() => setExpandedPG(!expandedPG)}
@@ -295,7 +295,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
         )}
       </div>
 
-      {/* Course Structure */}
+
       <div className="mt-8 bg-gradient-to-r from-lime-50 to-zinc-50 rounded-lg p-6">
         <button
           onClick={() => setExpandedCourse(!expandedCourse)}

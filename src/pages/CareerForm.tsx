@@ -68,10 +68,10 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
             </p>
           </div>
 
-          {/* Form */}
+       
           <div className="bg-white rounded-lg shadow-lg p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name */}
+         
               <div>
                 <label className="flex items-center text-zinc-700 font-medium mb-2">
                   <User className="h-4 w-4 mr-2" />
@@ -89,7 +89,7 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
                 {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
 
-              {/* Class */}
+              
               <div>
                 <label className="flex items-center text-zinc-700 font-medium mb-2">
                   <GraduationCap className="h-4 w-4 mr-2" />
@@ -110,7 +110,7 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
                 {errors.class && <p className="text-red-500 text-sm mt-1">{errors.class}</p>}
               </div>
 
-              {/* Stream */}
+       
               <div>
                 <label className="flex items-center text-zinc-700 font-medium mb-2">
                   <GraduationCap className="h-4 w-4 mr-2" />
@@ -133,7 +133,7 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
                 {errors.stream && <p className="text-red-500 text-sm mt-1">{errors.stream}</p>}
               </div>
 
-              {/* Interests */}
+         
               <div>
                 <label className="flex items-center text-zinc-700 font-medium mb-2">
                   <Heart className="h-4 w-4 mr-2" />
@@ -151,7 +151,7 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
                 {errors.interests && <p className="text-red-500 text-sm mt-1">{errors.interests}</p>}
               </div>
 
-              {/* Location */}
+      
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="flex items-center text-zinc-700 font-medium mb-2">
@@ -195,7 +195,7 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
                 </div>
               </div>
 
-              {/* Submit Button */}
+            
               <button
                 type="submit"
                 className="w-full bg-lime-500 hover:bg-lime-600 text-white py-4 px-6 rounded-lg font-semibold text-lg transition-colors duration-300 flex items-center justify-center group"

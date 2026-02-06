@@ -36,12 +36,12 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* ================= HERO ================= */}
+      
       <section
         className="relative bg-cover bg-center bg-no-repeat text-white py-24"
         style={{ backgroundImage: "url('/bg_carrier.jpeg')" }}
       >
-        {/* Overlay */}
+    
         <div className="absolute inset-0 bg-zinc-900/80"></div>
 
         <div className="relative container mx-auto px-4">
@@ -106,7 +106,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* ================= CTA ================= */}
+    
       <section className="bg-zinc-900 py-16">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-3xl font-bold text-white mb-4">
