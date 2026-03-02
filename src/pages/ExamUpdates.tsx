@@ -118,7 +118,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           </p>
         </div>
 
-        {/* Category Dashboard */}
+        {/* Category Cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           {examCategories.map((category, index) => (
             <div key={index} className="bg-white rounded-lg p-4 text-center shadow-lg">
@@ -131,7 +131,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        {/* Alert Banner */}
+        {/* Alert */}
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 mb-8">
           <div className="flex items-start">
             <AlertCircle className="h-5 w-5 text-green-600 mr-3 mt-0.5" />
@@ -150,23 +150,19 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
             <div key={index} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="p-6">
 
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <h3 className="text-xl font-bold text-gray-800 mr-3">{exam.name}</h3>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(exam.date)}`}>
-                        {exam.date}
-                      </span>
-                    </div>
+                <div className="flex items-center mb-2">
+                  <h3 className="text-xl font-bold text-gray-800 mr-3">{exam.name}</h3>
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(exam.date)}`}>
+                    {exam.date}
+                  </span>
+                </div>
 
-                    <p className="text-gray-600 mb-2">{exam.description}</p>
+                <p className="text-gray-600 mb-2">{exam.description}</p>
 
-                    <div className="flex items-center text-sm text-gray-500">
-                      <BookOpen className="h-4 w-4 mr-1" />
-                      <span className="mr-4">{exam.type}</span>
-                      <span>Eligibility: {exam.eligibility}</span>
-                    </div>
-                  </div>
+                <div className="flex items-center text-sm text-gray-500 mb-4">
+                  <BookOpen className="h-4 w-4 mr-1" />
+                  <span className="mr-4">{exam.type}</span>
+                  <span>Eligibility: {exam.eligibility}</span>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -174,37 +170,42 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
                     <Calendar className="h-4 w-4 mr-2 text-green-500" />
                     <span><strong>Exam Date:</strong> {exam.date}</span>
                   </div>
-
                   <div className="flex items-center text-sm text-gray-600">
                     <Clock className="h-4 w-4 mr-2 text-green-500" />
                     <span><strong>Registration Deadline:</strong> {exam.registrationDeadline}</span>
                   </div>
                 </div>
 
+                {/* Buttons Section */}
                 <div className="flex justify-between items-center">
 
-                  {/* Official Website Link */}
+                  {/* Pinnacle Style Website Link Added */}
                   <a
                     href={exam.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-green-600 hover:text-green-800 font-medium text-sm flex items-center transition-colors"
+                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    <ExternalLink className="h-4 w-4 mr-1" />
-                    Official Website
+                    Visit Official Website
+                    <ExternalLink className="h-4 w-4 ml-2" />
                   </a>
 
+                  {/* Spark Original Buttons */}
                   <div className="flex gap-2">
                     <button className="bg-gradient-to-r from-green-50 to-emerald-50 hover:from-green-100 hover:to-emerald-100 text-green-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                       Set Reminder
                     </button>
 
-                    <button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <button
+                      onClick={() => onNavigate('career-form')}
+                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
                       More Details
                     </button>
                   </div>
 
                 </div>
+
               </div>
             </div>
           ))}
