@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
-import { ArrowRight, User, GraduationCap, Heart, MapPin } from 'lucide-react';
-import type { Page, FormData } from '../App';
+import React, { useState } from "react";
+import { ArrowRight, User, GraduationCap, Heart, MapPin } from "lucide-react";
+import type { Page } from "../App";
+import { indiaData, StateType } from "../data/indiaData";
+
+interface FormData {
+  name: string;
+  class: string;
+  stream: string;
+  interests: string;
+  state: StateType | "";
+  district: string;
+}
 
 interface CareerFormProps {
   formData: FormData;
@@ -8,43 +18,41 @@ interface CareerFormProps {
   onNavigate: (page: Page) => void;
 }
 
-const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNavigate }) => {
+const CareerForm: React.FC<CareerFormProps> = ({
+  formData,
+  setFormData,
+  onNavigate,
+}) => {
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
-  const states = ['Tamil Nadu', 'Jammu and Kashmir','Karnataka', 'Kerala', 'Andhra Pradesh', 'Maharashtra', 'Delhi'];
-  
-  const districts = {
-    'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai', 'Salem', 'Trichy'],
-    'Jammu and Kashmir': ['Srinagar', 'Jammu', 'Anantnag', 'Baramulla', 'Kupwara'], 
-    'Karnataka': ['Bangalore', 'Mysore', 'Mangalore', 'Hubli', 'Belgaum'],
-    'Kerala': ['Kochi', 'Thiruvananthapuram', 'Kozhikode', 'Thrissur', 'Kannur'],
-    'Andhra Pradesh': ['Hyderabad', 'Vijayawada', 'Visakhapatnam', 'Guntur', 'Tirupati'],
-    'Maharashtra': ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad'],
-    'Delhi': ['Central Delhi', 'North Delhi', 'South Delhi', 'East Delhi', 'West Delhi']
-  };
+  const states = Object.keys(indiaData) as StateType[];
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({
+  const handleInputChange = (
+    field: keyof FormData,
+    value: string
+  ) => {
+    setFormData((prev) => ({
       ...prev,
       [field]: value,
-      ...(field === 'state' ? { district: '' } : {})
+      ...(field === "state" ? { district: "" } : {}),
     }));
-    
+
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
   const validateForm = () => {
     const newErrors: Partial<FormData> = {};
-    
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.class) newErrors.class = 'Class is required';
-    if (!formData.stream) newErrors.stream = 'Stream is required';
-    if (!formData.interests.trim()) newErrors.interests = 'Interests are required';
-    if (!formData.state) newErrors.state = 'State is required';
-    if (!formData.district) newErrors.district = 'District is required';
-    
+
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.class) newErrors.class = "Class is required";
+    if (!formData.stream) newErrors.stream = "Stream is required";
+    if (!formData.interests.trim())
+      newErrors.interests = "Interests are required";
+    if (!formData.state) newErrors.state = "State is required";
+    if (!formData.district) newErrors.district = "District is required";
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -52,7 +60,7 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      onNavigate('recommendations');
+      onNavigate("recommendations");
     }
   };
 
@@ -60,149 +68,139 @@ const CareerForm: React.FC<CareerFormProps> = ({ formData, setFormData, onNaviga
     <div className="min-h-screen bg-zinc-100 py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-lime-600 mb-4">Career Guidance Form</h1>
-            <p className="text-zinc-600">
-              Help us understand your background and preferences to provide personalized recommendations
-            </p>
+            <h1 className="text-4xl font-bold text-lime-600 mb-4">
+              Career Guidance Form
+            </h1>
           </div>
 
-       
           <div className="bg-white rounded-lg shadow-lg p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
-         
+
+              {/* Name */}
               <div>
-                <label className="flex items-center text-zinc-700 font-medium mb-2">
-                  <User className="h-4 w-4 mr-2" />
-                  Full Name
+                <label className="flex items-center font-medium mb-2">
+                  <User className="h-4 w-4 mr-2" /> Full Name
                 </label>
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 transition-colors ${
-                    errors.name ? 'border-red-500' : 'border-zinc-300'
-                  }`}
-                  placeholder="Enter your full name"
+                  onChange={(e) =>
+                    handleInputChange("name", e.target.value)
+                  }
+                  className="w-full px-4 py-3 border rounded-lg border-zinc-300"
                 />
-                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
 
-              
+              {/* Class */}
               <div>
-                <label className="flex items-center text-zinc-700 font-medium mb-2">
-                  <GraduationCap className="h-4 w-4 mr-2" />
-                  Current Class
+                <label className="flex items-center font-medium mb-2">
+                  <GraduationCap className="h-4 w-4 mr-2" /> Current Class
                 </label>
                 <select
                   value={formData.class}
-                  onChange={(e) => handleInputChange('class', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 transition-colors ${
-                    errors.class ? 'border-red-500' : 'border-zinc-300'
-                  }`}
+                  onChange={(e) =>
+                    handleInputChange("class", e.target.value)
+                  }
+                  className="w-full px-4 py-3 border rounded-lg border-zinc-300"
                 >
-                  <option value="">Select your class</option>
-                  <option value="10th">10th Grade</option>
-                  <option value="11th">11th Grade</option>
-                  <option value="12th">12th Grade</option>
+                  <option value="">Select</option>
+                  <option value="10th">10th</option>
+                  <option value="11th">11th</option>
+                  <option value="12th">12th</option>
                 </select>
-                {errors.class && <p className="text-red-500 text-sm mt-1">{errors.class}</p>}
               </div>
 
-       
+              {/* Stream */}
               <div>
-                <label className="flex items-center text-zinc-700 font-medium mb-2">
-                  <GraduationCap className="h-4 w-4 mr-2" />
-                  Stream/Subject
+                <label className="flex items-center font-medium mb-2">
+                  <GraduationCap className="h-4 w-4 mr-2" /> Stream
                 </label>
                 <select
                   value={formData.stream}
-                  onChange={(e) => handleInputChange('stream', e.target.value)}
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 transition-colors ${
-                    errors.stream ? 'border-red-500' : 'border-zinc-300'
-                  }`}
+                  onChange={(e) =>
+                    handleInputChange("stream", e.target.value)
+                  }
+                  className="w-full px-4 py-3 border rounded-lg border-zinc-300"
                 >
-                  <option value="">Select your stream</option>
+                  <option value="">Select</option>
                   <option value="Computer Science">Computer Science</option>
                   <option value="Biology">Biology</option>
                   <option value="Commerce">Commerce</option>
                   <option value="Arts">Arts</option>
-                  <option value="Others">Others</option>
                 </select>
-                {errors.stream && <p className="text-red-500 text-sm mt-1">{errors.stream}</p>}
               </div>
 
-         
+              {/* Interests */}
               <div>
-                <label className="flex items-center text-zinc-700 font-medium mb-2">
-                  <Heart className="h-4 w-4 mr-2" />
-                  Interests & Hobbies
+                <label className="flex items-center font-medium mb-2">
+                  <Heart className="h-4 w-4 mr-2" /> Interests
                 </label>
                 <textarea
-                  value={formData.interests}
-                  onChange={(e) => handleInputChange('interests', e.target.value)}
                   rows={3}
-                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 transition-colors resize-none ${
-                    errors.interests ? 'border-red-500' : 'border-zinc-300'
-                  }`}
-                  placeholder="Tell us about your interests, hobbies, and what you enjoy doing..."
+                  value={formData.interests}
+                  onChange={(e) =>
+                    handleInputChange("interests", e.target.value)
+                  }
+                  className="w-full px-4 py-3 border rounded-lg border-zinc-300"
                 />
-                {errors.interests && <p className="text-red-500 text-sm mt-1">{errors.interests}</p>}
               </div>
 
-      
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="flex items-center text-zinc-700 font-medium mb-2">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    Preferred State
-                  </label>
-                  <select
-                    value={formData.state}
-                    onChange={(e) => handleInputChange('state', e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 transition-colors ${
-                      errors.state ? 'border-red-500' : 'border-zinc-300'
-                    }`}
-                  >
-                    <option value="">Select state</option>
-                    {states.map(state => (
-                      <option key={state} value={state}>{state}</option>
-                    ))}
-                  </select>
-                  {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
-                </div>
-
-                <div>
-                  <label className="flex items-center text-zinc-700 font-medium mb-2">
-                    <MapPin className="h-4 w-4 mr-2" />
-                    Preferred District
-                  </label>
-                  <select
-                    value={formData.district}
-                    onChange={(e) => handleInputChange('district', e.target.value)}
-                    disabled={!formData.state}
-                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 transition-colors ${
-                      errors.district ? 'border-red-500' : 'border-zinc-300'
-                    } ${!formData.state ? 'bg-zinc-100' : ''}`}
-                  >
-                    <option value="">Select district</option>
-                    {formData.state && districts[formData.state as keyof typeof districts]?.map(district => (
-                      <option key={district} value={district}>{district}</option>
-                    ))}
-                  </select>
-                  {errors.district && <p className="text-red-500 text-sm mt-1">{errors.district}</p>}
-                </div>
+              {/* State */}
+              <div>
+                <label className="flex items-center font-medium mb-2">
+                  <MapPin className="h-4 w-4 mr-2" /> State
+                </label>
+                <select
+                  value={formData.state}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "state",
+                      e.target.value as StateType
+                    )
+                  }
+                  className="w-full px-4 py-3 border rounded-lg border-zinc-300"
+                >
+                  <option value="">Select State</option>
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-            
+              {/* District */}
+              <div>
+                <label className="flex items-center font-medium mb-2">
+                  <MapPin className="h-4 w-4 mr-2" /> District
+                </label>
+                <select
+                  value={formData.district}
+                  onChange={(e) =>
+                    handleInputChange("district", e.target.value)
+                  }
+                  disabled={!formData.state}
+                  className="w-full px-4 py-3 border rounded-lg border-zinc-300"
+                >
+                  <option value="">Select District</option>
+                  {formData.state &&
+                    indiaData[formData.state].map((district) => (
+                      <option key={district} value={district}>
+                        {district}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
               <button
                 type="submit"
-                className="w-full bg-lime-500 hover:bg-lime-600 text-white py-4 px-6 rounded-lg font-semibold text-lg transition-colors duration-300 flex items-center justify-center group"
+                className="w-full bg-lime-500 hover:bg-lime-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center"
               >
-                Get My Recommendations
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                Get Recommendations
+                <ArrowRight className="ml-2 h-5 w-5" />
               </button>
+
             </form>
           </div>
         </div>

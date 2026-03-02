@@ -1,0 +1,42 @@
+export const indiaData = {
+  "Tamil Nadu": ["Chennai","Coimbatore","Madurai","Salem","Tiruchirappalli","Tiruppur","Erode","Vellore","Thoothukudi","Thanjavur"],
+  "Andhra Pradesh": ["Anantapur","Chittoor","East Godavari","Guntur","Krishna","Kurnool","Nellore","Prakasam","Srikakulam","Visakhapatnam"],
+  "Arunachal Pradesh": ["Tawang","West Kameng","East Kameng","Papum Pare","Kurung Kumey","Lower Subansiri","Upper Subansiri","West Siang","East Siang","Changlang"],
+  "Assam": ["Baksa","Barpeta","Bongaigaon","Cachar","Darrang","Dhemaji","Dhubri","Dibrugarh","Goalpara","Golaghat"],
+  "Bihar": ["Patna","Gaya","Bhagalpur","Muzaffarpur","Darbhanga","Purnia","Arrah","Begusarai","Katihar","Samastipur"],
+  "Chhattisgarh": ["Raipur","Bilaspur","Durg","Korba","Rajnandgaon","Jagdalpur","Ambikapur","Raigarh","Mahasamund","Kanker"],
+  "Goa": ["North Goa","South Goa"],
+  "Gujarat": ["Ahmedabad","Surat","Vadodara","Rajkot","Bhavnagar","Junagadh","Gandhinagar","Kutch","Mehsana","Navsari"],
+  "Haryana": ["Ambala","Faridabad","Gurugram","Hisar","Karnal","Panipat","Rohtak","Sonipat","Bhiwani","Sirsa"],
+  "Himachal Pradesh": ["Shimla","Kullu","Kangra","Solan","Mandi","Chamba","Hamirpur","Una","Bilaspur","Sirmaur"],
+  "Jharkhand": ["Ranchi","Jamshedpur","Dhanbad","Bokaro","Hazaribagh","Giridih","Deoghar","Palamu","Ramgarh","Dumka"],
+  "Karnataka": ["Bengaluru Urban","Mysuru","Mangaluru","Hubballi","Belagavi","Ballari","Kalaburagi","Davanagere","Tumakuru","Udupi"],
+  "Kerala": ["Thiruvananthapuram","Kochi","Kozhikode","Thrissur","Kollam","Alappuzha","Kottayam","Kannur","Palakkad","Malappuram"],
+  "Madhya Pradesh": ["Bhopal","Indore","Gwalior","Jabalpur","Ujjain","Sagar","Satna","Rewa","Ratlam","Chhindwara"],
+  "Maharashtra": ["Mumbai City","Mumbai Suburban","Pune","Nagpur","Nashik","Thane","Aurangabad","Kolhapur","Solapur","Amravati"],
+  "Manipur": ["Imphal East","Imphal West","Thoubal","Churachandpur","Bishnupur","Ukhrul","Senapati","Tamenglong","Kakching","Tengnoupal"],
+  "Meghalaya": ["East Khasi Hills","West Khasi Hills","Ri-Bhoi","West Garo Hills","East Garo Hills","South Garo Hills","West Jaintia Hills","East Jaintia Hills"],
+  "Mizoram": ["Aizawl","Lunglei","Champhai","Serchhip","Kolasib","Lawngtlai","Mamit","Saiha"],
+  "Nagaland": ["Dimapur","Kohima","Mokokchung","Tuensang","Mon","Wokha","Zunheboto","Phek","Longleng","Kiphire"],
+  "Odisha": ["Bhubaneswar","Cuttack","Rourkela","Sambalpur","Puri","Balasore","Berhampur","Koraput","Jharsuguda","Angul"],
+  "Punjab": ["Amritsar","Ludhiana","Jalandhar","Patiala","Bathinda","Mohali","Hoshiarpur","Gurdaspur","Firozpur","Moga"],
+  "Rajasthan": ["Jaipur","Jodhpur","Udaipur","Kota","Bikaner","Ajmer","Alwar","Bhilwara","Chittorgarh","Sikar"],
+  "Sikkim": ["East Sikkim","West Sikkim","North Sikkim","South Sikkim"],
+  "Telangana": ["Hyderabad","Warangal","Karimnagar","Nizamabad","Khammam","Adilabad","Mahbubnagar","Medak","Nalgonda","Sangareddy"],
+  "Tripura": ["West Tripura","Sepahijala","Khowai","Gomati","Unakoti","North Tripura","Dhalai","South Tripura"],
+  "Uttar Pradesh": ["Lucknow","Kanpur","Varanasi","Prayagraj","Agra","Meerut","Noida","Ghaziabad","Gorakhpur","Bareilly"],
+  "Uttarakhand": ["Dehradun","Haridwar","Nainital","Almora","Pithoragarh","Chamoli","Tehri Garhwal","Udham Singh Nagar","Bageshwar","Rudraprayag"],
+  "West Bengal": ["Kolkata","Howrah","Darjeeling","Siliguri","Asansol","Malda","Murshidabad","Hooghly","Bardhaman","Nadia"],
+
+  // Union Territories
+  "Andaman and Nicobar Islands": ["Port Blair","Car Nicobar","North Andaman","Middle Andaman","South Andaman"],
+  "Chandigarh": ["Chandigarh"],
+  "Dadra and Nagar Haveli and Daman and Diu": ["Daman","Diu","Silvassa"],
+  "Delhi": ["Central Delhi","North Delhi","South Delhi","East Delhi","West Delhi","North West Delhi","South West Delhi","Shahdara","New Delhi"],
+  "Jammu and Kashmir": ["Srinagar","Jammu","Anantnag","Baramulla","Kupwara","Pulwama","Kathua","Rajouri","Udhampur","Shopian"],
+  "Ladakh": ["Leh","Kargil"],
+  "Lakshadweep": ["Kavaratti"],
+  "Puducherry": ["Puducherry","Karaikal","Mahe","Yanam"]
+} as const;
+
+export type StateType = keyof typeof indiaData;
