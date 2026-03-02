@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ArrowRight, User, GraduationCap, Heart, MapPin } from "lucide-react";
 import type { Page } from "../App";
 import { indiaData, StateType } from "../data/indiaData";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 interface FormData {
   name: string;
@@ -23,7 +25,8 @@ const CareerForm: React.FC<CareerFormProps> = ({
   setFormData,
   onNavigate,
 }) => {
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  
 
   const states = Object.keys(indiaData) as StateType[];
 
@@ -43,26 +46,43 @@ const CareerForm: React.FC<CareerFormProps> = ({
   };
 
   const validateForm = () => {
-    const newErrors: Partial<FormData> = {};
+   const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.class) newErrors.class = "Class is required";
     if (!formData.stream) newErrors.stream = "Stream is required";
     if (!formData.interests.trim())
       newErrors.interests = "Interests are required";
-    if (!formData.state) newErrors.state = "State is required";
+   if (!formData.state) newErrors.state = "State is required";
     if (!formData.district) newErrors.district = "District is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      onNavigate("recommendations");
-    }
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!validateForm()) return;
+
+  try {
+    await addDoc(collection(db, "careerForms"), {
+      name: formData.name,
+      class: formData.class,
+      stream: formData.stream,
+      interests: formData.interests,
+      state: formData.state,
+      district: formData.district,
+      createdAt: new Date()
+    });
+
+    console.log("Form saved successfully");
+
+    onNavigate("recommendations");
+  } catch (error) {
+    console.error("Error saving form:", error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-zinc-100 py-8">
