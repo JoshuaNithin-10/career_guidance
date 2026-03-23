@@ -78,6 +78,9 @@ const CareerForm: React.FC<CareerFormProps> = ({
 
     console.log("Form saved successfully");
 
+    localStorage.setItem("userStream", formData.stream);
+    localStorage.setItem("userInterest", formData.interests);
+
     onNavigate("recommendations");
   } catch (error) {
     console.error("Error saving form:", error);

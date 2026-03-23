@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar, Clock, ExternalLink, BookOpen, AlertCircle } from 'lucide-react';
 import type { Page } from '../App';
 
@@ -6,81 +6,145 @@ interface ExamUpdatesProps {
   onNavigate: (page: Page) => void;
 }
 
-const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
+const ExamUpdates: React.FC<ExamUpdatesProps> = () => {
+  const [selectedExam, setSelectedExam] = useState<any>(null);
+
   const upcomingExams = [
+    // 💻 COMPUTER SCIENCE / ENGINEERING
     {
       name: 'JEE Main 2025',
       date: 'January 2025',
       type: 'Engineering',
-      description: 'National level entrance exam for engineering admissions',
+      streams: ['Computer Science'],
+      description: 'Engineering entrance exam',
       registrationDeadline: 'December 2024',
       eligibility: '12th with PCM',
-      website: 'https://jeemain.nta.nic.in'
-    },
-    {
-      name: 'NEET 2025',
-      date: 'May 2025',
-      type: 'Medical',
-      description: 'National Eligibility cum Entrance Test for medical courses',
-      registrationDeadline: 'March 2025',
-      eligibility: '12th with PCB',
-      website: 'https://neet.nta.nic.in'
-    },
-    {
-      name: 'CAT 2025',
-      date: 'November 2025',
-      type: 'Management',
-      description: 'Common Admission Test for IIM and other B-schools',
-      registrationDeadline: 'September 2025',
-      eligibility: 'Graduation in any discipline',
-      website: 'https://iimcat.ac.in'
-    },
-    {
-      name: 'CLAT 2025',
-      date: 'May 2025',
-      type: 'Law',
-      description: 'Common Law Admission Test for law colleges',
-      registrationDeadline: 'March 2025',
-      eligibility: '12th pass',
-      website: 'https://consortiumofnlus.ac.in'
-    },
-    {
-      name: 'GATE 2025',
-      date: 'February 2025',
-      type: 'Engineering/Science',
-      description: 'Graduate Aptitude Test in Engineering for PG admissions',
-      registrationDeadline: 'October 2024',
-      eligibility: 'B.Tech/B.E. or equivalent',
-      website: 'https://gate.iitkgp.ac.in'
-    },
-    {
-      name: 'AIIMS MBBS 2025',
-      date: 'May 2025',
-      type: 'Medical',
-      description: 'All India Institute of Medical Sciences entrance exam',
-      registrationDeadline: 'March 2025',
-      eligibility: '12th with PCB',
-      website: 'https://aiimsexams.ac.in'
+      website: 'https://jeemain.nta.nic.in',
+      common: false
     },
     {
       name: 'BITSAT 2025',
       date: 'August 2025',
       type: 'Engineering',
-      description: 'Birla Institute of Technology and Science Admission Test',
+      streams: ['Computer Science'],
+      description: 'BITS admission test',
       registrationDeadline: 'June 2025',
       eligibility: '12th with PCM',
-      website: 'https://www.bitsadmission.com'
+      website: 'https://www.bitsadmission.com',
+      common: false
     },
     {
-      name: 'KVPY 2025',
+      name: 'GATE 2025',
+      date: 'February 2025',
+      type: 'Engineering',
+      streams: ['Computer Science'],
+      description: 'PG engineering exam',
+      registrationDeadline: 'October 2024',
+      eligibility: 'B.Tech',
+      website: 'https://gate.iitkgp.ac.in',
+      common: false
+    },
+  
+    // 🧬 BIOLOGY
+    {
+      name: 'NEET 2025',
+      date: 'May 2025',
+      type: 'Medical',
+      streams: ['Biology'],
+      description: 'Medical entrance exam',
+      registrationDeadline: 'March 2025',
+      eligibility: '12th with PCB',
+      website: 'https://neet.nta.nic.in',
+      common: false
+    },
+    {
+      name: 'AIIMS 2025',
+      date: 'May 2025',
+      type: 'Medical',
+      streams: ['Biology'],
+      description: 'AIIMS admission exam',
+      registrationDeadline: 'March 2025',
+      eligibility: '12th PCB',
+      website: 'https://aiimsexams.ac.in',
+      common: false
+    },
+  
+    // 📊 COMMERCE / ARTS
+    {
+      name: 'CUET 2025',
+      date: 'June 2025',
+      type: 'General',
+      streams: ['Commerce', 'Arts', 'Biology', 'Computer Science'],
+      description: 'Central University Entrance Test',
+      registrationDeadline: 'April 2025',
+      eligibility: '12th pass',
+      website: 'https://cuet.samarth.ac.in',
+      common: true
+    },
+    {
+      name: 'CLAT 2025',
+      date: 'May 2025',
+      type: 'Law',
+      streams: ['Arts', 'Commerce'],
+      description: 'Law entrance exam',
+      registrationDeadline: 'March 2025',
+      eligibility: '12th pass',
+      website: 'https://consortiumofnlus.ac.in',
+      common: false
+    },
+    {
+      name: 'CAT 2025',
       date: 'November 2025',
-      type: 'Science/Research',
-      description: 'Kishore Vaigyanik Protsahan Yojana for science students',
+      type: 'Management',
+      streams: ['Commerce', 'Arts'],
+      description: 'MBA entrance exam',
       registrationDeadline: 'September 2025',
-      eligibility: '11th/12th Science students',
-      website: 'https://kvpy.iisc.ac.in'
+      eligibility: 'Graduation',
+      website: 'https://iimcat.ac.in',
+      common: false
     }
   ];
+
+  const getFilteredExams = () => {
+    const userStream = localStorage.getItem("userStream") || "";
+    const interest = localStorage.getItem("userInterest")?.toLowerCase() || "";
+  
+    // 🎯 Strict match
+    let filtered = upcomingExams.filter((exam) =>
+      exam.streams.includes(userStream)
+    );
+  
+    // ❤️ Interest boost
+    if (interest) {
+      const interestMatches = upcomingExams.filter((exam) =>
+        (interest.includes("law") && exam.type === "Law") ||
+        (interest.includes("business") && exam.type === "Management") ||
+        (interest.includes("medical") && exam.type === "Medical")
+      );
+      filtered = [...filtered, ...interestMatches];
+    }
+  
+    // 🌍 Add common exams if less than 3
+    if (filtered.length < 3) {
+      const commonExams = upcomingExams.filter((exam) => exam.common);
+      filtered = [...filtered, ...commonExams];
+    }
+  
+    // ❌ Remove duplicates
+    let unique = Array.from(
+      new Map(filtered.map((item) => [item.name, item])).values()
+    );
+
+    // 🛡️ GUARANTEE MINIMUM 3 EXAMS FOR BLANK PROFILES
+    if (unique.length < 3) {
+      const fallbacks = upcomingExams.filter(
+        (exam) => !unique.find((u) => u.name === exam.name)
+      );
+      unique = [...unique, ...fallbacks.slice(0, 3 - unique.length)];
+    }
+  
+    return unique.slice(0, 5); // show max 5 (clean UI)
+  };
 
   const examCategories = [
     { name: 'Engineering', count: 3, color: 'bg-gradient-to-r from-green-200 to-emerald-200 text-green-800' },
@@ -146,11 +210,17 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
 
         {/* Exam Cards */}
         <div className="grid gap-6">
-          {upcomingExams.map((exam, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="p-6">
+          {getFilteredExams().map((exam, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border-l-4 border-green-500 relative">
+              <div className="p-6 pt-8">
 
-                <div className="flex items-center mb-2">
+                <div className="absolute top-4 right-4">
+                  <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full shadow-sm font-semibold">
+                    ⭐ Recommended for you
+                  </span>
+                </div>
+
+                <div className="flex items-center mb-2 mt-2">
                   <h3 className="text-xl font-bold text-gray-800 mr-3">{exam.name}</h3>
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(exam.date)}`}>
                     {exam.date}
@@ -197,7 +267,7 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
                     </button>
 
                     <button
-                      onClick={() => onNavigate('career-form')}
+                      onClick={() => setSelectedExam(exam)}
                       className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                     >
                       More Details
@@ -212,6 +282,59 @@ const ExamUpdates: React.FC<ExamUpdatesProps> = ({ onNavigate }) => {
         </div>
 
       </div>
+
+      {selectedExam && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">
+
+            <h2 className="text-xl font-bold text-green-600 mb-2">
+              {selectedExam.name}
+            </h2>
+
+            <p className="text-sm text-gray-600 mb-4">
+              {selectedExam.description}
+            </p>
+
+            <div className="space-y-3 text-sm bg-green-50 p-4 rounded-lg mb-4">
+              <p className="flex justify-between border-b border-green-100 pb-2">
+                <strong className="text-green-800">Exam Date:</strong> 
+                <span className="text-green-900">{selectedExam.date}</span>
+              </p>
+              <p className="flex justify-between border-b border-green-100 pb-2">
+                <strong className="text-green-800">Registration:</strong> 
+                <span className="text-green-900">{selectedExam.registrationDeadline}</span>
+              </p>
+              <p className="flex justify-between border-b border-green-100 pb-2">
+                <strong className="text-green-800">Eligibility:</strong> 
+                <span className="text-green-900">{selectedExam.eligibility}</span>
+              </p>
+              <p className="flex justify-between">
+                <strong className="text-green-800">Type:</strong> 
+                <span className="text-green-900">{selectedExam.type}</span>
+              </p>
+            </div>
+
+            <div className="flex justify-between items-center mt-6">
+              <a
+                href={selectedExam.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-4 py-2 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-900 transition-colors"
+              >
+                Apply Now
+              </a>
+              <button
+                onClick={() => setSelectedExam(null)}
+                className="bg-zinc-200 text-zinc-800 px-4 py-2 rounded-lg hover:bg-zinc-300 transition-colors font-medium"
+              >
+                Close
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
