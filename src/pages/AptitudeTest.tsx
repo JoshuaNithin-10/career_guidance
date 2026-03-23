@@ -198,7 +198,14 @@ const AptitudeTest: React.FC<AptitudeTestProps> = ({ onNavigate }) => {
 
             <div className="flex justify-center gap-4 mt-6">
               <button
-                onClick={() => onNavigate('recommendations')}
+                onClick={() => {
+                  const scores = calculateScores();
+                  const top = getTopCategory(scores);
+
+                  localStorage.setItem("aptitudeTop", top);
+
+                  onNavigate('recommendations');
+                }}
                 className="bg-lime-500 hover:bg-lime-600 text-black px-6 py-3 rounded-lg font-semibold"
               >
                 View Careers

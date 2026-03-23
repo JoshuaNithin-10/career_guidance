@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Building, Award, Brain, ChevronDown, ChevronUp, ExternalLink, MapPin, Star } from 'lucide-react';
+import { BookOpen, Building, Award, Brain, ChevronDown, ChevronUp, ExternalLink, MapPin } from 'lucide-react';
 import type { Page, FormData } from '../App';
 
 interface RecommendationsProps {
@@ -13,6 +13,8 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
   const [activeTab, setActiveTab] = useState<TabType>('courses');
   const [expandedPG, setExpandedPG] = useState(false);
   const [expandedCourse, setExpandedCourse] = useState(false);
+
+  const aptitudeTop = localStorage.getItem("aptitudeTop");
 
   const mockCourses = {
     'Computer Science': [
@@ -151,90 +153,217 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
     }
   ];
 
- const mockColleges = {
-  'Tamil Nadu': [
-    { name: 'Anna University', location: 'Chennai', nirfRank: 15 },
-    { name: 'VIT University', location: 'Vellore', nirfRank: 18 },
-    { name: 'SRM Institute', location: 'Chennai', nirfRank: 35 },
-    { name: 'PSG College', location: 'Coimbatore', nirfRank: 42 },
-    { name: 'Madras Institute of Technology', location: 'Chennai', nirfRank: 25 },
-    { name: 'SSN College of Engineering', location: 'Chennai', nirfRank: 48 },
-    { name: 'Coimbatore Institute of Technology', location: 'Coimbatore', nirfRank: 55 },
-    { name: 'Thiagarajar College of Engineering', location: 'Madurai', nirfRank: 65 }
-  ],
-  'Karnataka': [
-    { name: 'Indian Institute of Science', location: 'Bangalore', nirfRank: 1 },
-    { name: 'Manipal University', location: 'Manipal', nirfRank: 28 },
-    { name: 'PES University', location: 'Bangalore', nirfRank: 45 },
-    { name: 'RV College of Engineering', location: 'Bangalore', nirfRank: 52 },
-    { name: 'BMS College of Engineering', location: 'Bangalore', nirfRank: 63 },
-    { name: 'NIT Surathkal', location: 'Mangalore', nirfRank: 7 },
-    { name: 'IIIT Bangalore', location: 'Bangalore', nirfRank: 30 }
-  ],
-  'Kerala': [
-    { name: 'IIT Palakkad', location: 'Palakkad', nirfRank: 12 },
-    { name: 'CUSAT', location: 'Kochi', nirfRank: 38 },
-    { name: 'NIT Calicut', location: 'Kozhikode', nirfRank: 25 },
-    { name: 'University of Kerala', location: 'Thiruvananthapuram', nirfRank: 65 },
-    { name: 'College of Engineering Trivandrum', location: 'Thiruvananthapuram', nirfRank: 40 },
-    { name: 'Rajagiri School of Engineering', location: 'Kochi', nirfRank: 78 }
-  ],
-  'Andhra Pradesh': [
-    { name: 'IIT Tirupati', location: 'Tirupati', nirfRank: 11 },
-    { name: 'Andhra University', location: 'Visakhapatnam', nirfRank: 35 },
-    { name: 'NIT Andhra Pradesh', location: 'Tadepalligudem', nirfRank: 20 },
-    { name: 'SRM University Andhra Pradesh', location: 'Amaravati', nirfRank: 45 },
-    { name: 'VIT-AP University', location: 'Vellore (AP Campus)', nirfRank: 50 }
-  ],
-  'Maharashtra': [
-    { name: 'IIT Bombay', location: 'Mumbai', nirfRank: 3 },
-    { name: 'IIT Delhi (Mumbai Campus?)', location: 'Mumbai', nirfRank: 2 },
-    { name: 'COEP Pune', location: 'Pune', nirfRank: 30 },
-    { name: 'VJTI Mumbai', location: 'Mumbai', nirfRank: 35 },
-    { name: 'SP Pune University', location: 'Pune', nirfRank: 40 }
-  ],
-  'Delhi': [
-    { name: 'IIT Delhi', location: 'Delhi', nirfRank: 2 },
-    { name: 'Delhi Technological University', location: 'Delhi', nirfRank: 9 },
-    { name: 'Jamia Millia Islamia', location: 'Delhi', nirfRank: 18 },
-    { name: 'NSUT', location: 'Delhi', nirfRank: 22 }
-  ],
-  'Jammu and Kashmir': [
-    { name: 'IIT Jammu', location: 'Jammu', nirfRank: 28 },
-    { name: 'NIT Srinagar', location: 'Srinagar', nirfRank: 40 },
-    { name: 'University of Jammu', location: 'Jammu', nirfRank: 55 },
-    { name: 'Central University of Kashmir', location: 'Srinagar', nirfRank: 62 }
-  ]
-};
-  const mockScholarships = [
-    {
-      name: 'KVPY Scholarship',
-      amount: '₹5,000 - ₹28,000/month',
-      eligibility: 'Science students, entrance exam'
-    },
-    {
-      name: 'National Merit Scholarship',
-      amount: '₹12,000/year',
-      eligibility: 'Merit-based, all streams'
-    },
-    {
-      name: 'State Government Scholarship',
-      amount: '₹10,000 - ₹50,000/year',
-      eligibility: 'Based on family income and merit'
-    },
-    {
-      name: 'Minority Scholarship',
-      amount: '₹30,000/year',
-      eligibility: 'Minority communities, merit-based'
-    }
-  ];
+  const mockColleges = {
+    'Tamil Nadu': [
+      { name: 'Anna University', location: 'Chennai', nirfRank: 15, streams: ['Computer Science', 'Engineering'] },
+      { name: 'VIT University', location: 'Vellore', nirfRank: 18, streams: ['Computer Science', 'Engineering'] },
+      { name: 'SRM Institute', location: 'Chennai', nirfRank: 35, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Loyola College', location: 'Chennai', nirfRank: 10, streams: ['Arts', 'Commerce'] },
+      { name: 'Madras Christian College', location: 'Chennai', nirfRank: 20, streams: ['Arts', 'Commerce'] },
+      { name: 'PSG College', location: 'Coimbatore', nirfRank: 42, streams: ['Computer Science', 'Engineering', 'Arts', 'Commerce'] },
+      { name: 'Madras Medical College', location: 'Chennai', nirfRank: 12, streams: ['Biology'] },
+      { name: 'Madras Institute of Technology', location: 'Chennai', nirfRank: 25, streams: ['Computer Science', 'Engineering'] },
+      { name: 'SSN College of Engineering', location: 'Chennai', nirfRank: 48, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Coimbatore Institute of Technology', location: 'Coimbatore', nirfRank: 55, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Thiagarajar College of Engineering', location: 'Madurai', nirfRank: 65, streams: ['Computer Science', 'Engineering'] }
+    ],
+    'Karnataka': [
+      { name: 'Indian Institute of Science', location: 'Bangalore', nirfRank: 1, streams: ['Computer Science', 'Engineering', 'Biology'] },
+      { name: 'Manipal University', location: 'Manipal', nirfRank: 28, streams: ['Computer Science', 'Engineering', 'Commerce', 'Biology'] },
+      { name: 'PES University', location: 'Bangalore', nirfRank: 45, streams: ['Computer Science', 'Engineering'] },
+      { name: 'RV College of Engineering', location: 'Bangalore', nirfRank: 52, streams: ['Computer Science', 'Engineering'] },
+      { name: 'BMS College of Engineering', location: 'Bangalore', nirfRank: 63, streams: ['Computer Science', 'Engineering'] },
+      { name: 'NIT Surathkal', location: 'Mangalore', nirfRank: 7, streams: ['Computer Science', 'Engineering'] },
+      { name: 'IIIT Bangalore', location: 'Bangalore', nirfRank: 30, streams: ['Computer Science', 'Engineering'] }
+    ],
+    'Kerala': [
+      { name: 'IIT Palakkad', location: 'Palakkad', nirfRank: 12, streams: ['Computer Science', 'Engineering'] },
+      { name: 'CUSAT', location: 'Kochi', nirfRank: 38, streams: ['Computer Science', 'Engineering', 'Arts'] },
+      { name: 'NIT Calicut', location: 'Kozhikode', nirfRank: 25, streams: ['Computer Science', 'Engineering'] },
+      { name: 'University of Kerala', location: 'Thiruvananthapuram', nirfRank: 65, streams: ['Arts', 'Commerce', 'Biology'] },
+      { name: 'College of Engineering Trivandrum', location: 'Thiruvananthapuram', nirfRank: 40, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Rajagiri School of Engineering', location: 'Kochi', nirfRank: 78, streams: ['Computer Science', 'Engineering'] }
+    ],
+    'Andhra Pradesh': [
+      { name: 'IIT Tirupati', location: 'Tirupati', nirfRank: 11, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Andhra University', location: 'Visakhapatnam', nirfRank: 35, streams: ['Computer Science', 'Engineering', 'Arts', 'Commerce'] },
+      { name: 'NIT Andhra Pradesh', location: 'Tadepalligudem', nirfRank: 20, streams: ['Computer Science', 'Engineering'] },
+      { name: 'SRM University Andhra Pradesh', location: 'Amaravati', nirfRank: 45, streams: ['Computer Science', 'Engineering', 'Commerce'] },
+      { name: 'VIT-AP University', location: 'Vellore (AP Campus)', nirfRank: 50, streams: ['Computer Science', 'Engineering'] }
+    ],
+    'Maharashtra': [
+      { name: 'IIT Bombay', location: 'Mumbai', nirfRank: 3, streams: ['Computer Science', 'Engineering'] },
+      { name: 'IIT Delhi (Mumbai Campus?)', location: 'Mumbai', nirfRank: 2, streams: ['Computer Science', 'Engineering'] },
+      { name: 'COEP Pune', location: 'Pune', nirfRank: 30, streams: ['Computer Science', 'Engineering'] },
+      { name: 'VJTI Mumbai', location: 'Mumbai', nirfRank: 35, streams: ['Computer Science', 'Engineering'] },
+      { name: 'SP Pune University', location: 'Pune', nirfRank: 40, streams: ['Arts', 'Commerce', 'Computer Science'] }
+    ],
+    'Delhi': [
+      { name: 'IIT Delhi', location: 'Delhi', nirfRank: 2, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Delhi Technological University', location: 'Delhi', nirfRank: 9, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Jamia Millia Islamia', location: 'Delhi', nirfRank: 18, streams: ['Computer Science', 'Engineering', 'Arts', 'Commerce'] },
+      { name: 'NSUT', location: 'Delhi', nirfRank: 22, streams: ['Computer Science', 'Engineering'] },
+      { name: 'Delhi University', location: 'Delhi', nirfRank: 5, streams: ['Arts', 'Commerce'] },
+      { name: 'AIIMS Delhi', location: 'Delhi', nirfRank: 1, streams: ['Biology'] }
+    ],
+    'Jammu and Kashmir': [
+      { name: 'IIT Jammu', location: 'Jammu', nirfRank: 28, streams: ['Computer Science', 'Engineering'] },
+      { name: 'NIT Srinagar', location: 'Srinagar', nirfRank: 40, streams: ['Computer Science', 'Engineering'] },
+      { name: 'University of Jammu', location: 'Jammu', nirfRank: 55, streams: ['Arts', 'Commerce', 'Biology'] },
+      { name: 'Central University of Kashmir', location: 'Srinagar', nirfRank: 62, streams: ['Arts', 'Commerce', 'Computer Science'] }
+    ]
+  };
+  const scholarshipData = {
+    'Tamil Nadu': [
+      {
+        name: 'Tamil Nadu State Scholarship',
+        amount: '₹10,000/year',
+        eligibility: 'TN students with merit'
+      },
+      {
+        name: 'First Graduate Scholarship',
+        amount: '₹25,000/year',
+        eligibility: 'First graduate in family'
+      },
+      {
+        name: 'BC/MBC Scholarship',
+        amount: '₹15,000/year',
+        eligibility: 'Reserved category students'
+      },
+      {
+        name: 'Government Merit Scholarship',
+        amount: '₹20,000/year',
+        eligibility: 'High academic performance'
+      }
+    ],
 
-  const getCurrentCourses = () => {
-    return mockCourses[formData.stream as keyof typeof mockCourses] || mockCourses['Others'];
+    'Karnataka': [
+      {
+        name: 'Karnataka Vidyasiri Scholarship',
+        amount: '₹12,000/year',
+        eligibility: 'Low income students'
+      }
+    ],
+
+    'Maharashtra': [
+      {
+        name: 'MahaDBT Scholarship',
+        amount: '₹15,000/year',
+        eligibility: 'State students'
+      }
+    ]
   };
 
-  const getCurrentColleges = () => {
-    return mockColleges[formData.state as keyof typeof mockColleges] || mockColleges['Tamil Nadu'];
+  const getRegionalScholarships = () => {
+    return (
+      scholarshipData[formData.state as keyof typeof scholarshipData] || []
+    );
+  };
+
+  const getOtherScholarships = () => {
+    return [
+      {
+        name: 'National Merit Scholarship',
+        amount: '₹12,000/year',
+        eligibility: 'Merit-based, all India'
+      },
+      {
+        name: 'Central Sector Scheme Scholarship',
+        amount: '₹10,000/year',
+        eligibility: 'Top 20% students'
+      }
+    ];
+  };
+
+  const getSmartCareerPath = () => {
+    const interestText = formData.interests.toLowerCase();
+
+    // 🎯 base from stream
+    let base = formData.stream;
+
+    // 🧠 boost from aptitude
+    if (aptitudeTop === "logical") base = "Computer Science";
+    if (aptitudeTop === "numerical") base = "Engineering";
+    if (aptitudeTop === "verbal") base = "Arts";
+    if (aptitudeTop === "analytical") base = "Computer Science";
+
+    // ❤️ boost from interests
+    if (interestText.includes("design")) base = "Others";
+    if (interestText.includes("biology")) base = "Biology";
+    if (interestText.includes("business")) base = "Commerce";
+
+    return base;
+  };
+
+  const getCurrentCourses = () => {
+    const smartPath = getSmartCareerPath();
+
+    return (
+      mockCourses[smartPath as keyof typeof mockCourses] ||
+      mockCourses["Others"]
+    );
+  };
+
+  const getFilteredColleges = (colleges: any[]) => {
+    const userStream = formData.stream;
+    const interest = formData.interests.toLowerCase();
+
+    return colleges.filter((college) => {
+      const matchesStream =
+        college.streams?.includes(userStream) ||
+        (userStream === "Computer Science" && college.streams?.includes("Engineering"));
+
+      const matchesInterest =
+        (interest.includes("business") && college.streams?.includes("Commerce")) ||
+        (interest.includes("design") && college.streams?.includes("Arts")) ||
+        (interest.includes("medical") && college.streams?.includes("Biology"));
+
+      return matchesStream || matchesInterest;
+    });
+  };
+
+  const getRegionalColleges = () => {
+    let colleges: any[] = [];
+    if (formData.state && mockColleges[formData.state as keyof typeof mockColleges]) {
+      colleges = mockColleges[formData.state as keyof typeof mockColleges];
+    } else {
+      // Fallback for states not in mock data (e.g., Goa)
+      const stateName = formData.state || "Your Region";
+      const districtName = formData.district || stateName;
+      colleges = [
+        { name: `National Institute of Technology, ${stateName}`, location: stateName, nirfRank: 15, streams: ['Computer Science', 'Engineering'] },
+        { name: `State Engineering College, ${stateName}`, location: districtName, nirfRank: 42, streams: ['Computer Science', 'Engineering'] },
+        { name: `${stateName} University`, location: stateName, nirfRank: 55, streams: ['Arts', 'Commerce', 'Biology', 'Computer Science'] },
+        { name: `Institute of Science and Technology, ${stateName}`, location: stateName, nirfRank: 78, streams: ['Computer Science', 'Engineering'] },
+        { name: `State Medical College, ${stateName}`, location: stateName, nirfRank: 20, streams: ['Biology'] },
+        { name: `Commerce College, ${stateName}`, location: stateName, nirfRank: 33, streams: ['Commerce', 'Arts'] }
+      ];
+    }
+
+    const filtered = getFilteredColleges(colleges);
+    return filtered.slice(0, 7);
+  };
+
+  const getOtherStateColleges = () => {
+    const otherStates = Object.keys(mockColleges).filter(
+      (state) => state !== formData.state
+    );
+
+    let topColleges: any[] = [];
+
+    otherStates.forEach((state) => {
+      const colleges = mockColleges[state as keyof typeof mockColleges];
+      const filtered = getFilteredColleges(colleges);
+
+      if (filtered.length > 0) {
+        topColleges.push({
+          ...filtered[0], // pick top filtered college
+          state,
+        });
+      }
+    });
+
+    return topColleges.slice(0, 2);
   };
 
   const renderCourses = () => (
@@ -326,67 +455,137 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
   );
 
   const renderColleges = () => (
-    <div className="space-y-6">
-      <div className="bg-lime-50 border border-lime-200 rounded-lg p-6">
-        <h3 className="text-xl font-bold text-lime-600 mb-4">
-          Top Recommended Colleges in {formData.state || 'Your Area'}
-        </h3>
-        <p className="text-zinc-700">
-          Based on your preferences for {formData.stream} in {formData.district}, {formData.state}
-        </p>
-      </div>
+    <div className="space-y-8">
 
-      <div className="grid gap-4">
-        {getCurrentColleges().map((college, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <div className="flex-1">
-                <h4 className="text-lg font-bold text-zinc-800 mb-2">{college.name}</h4>
-                <p className="flex items-center text-zinc-600 mb-2">
-                  <MapPin className="h-4 w-4 mr-1" />
-                  {college.location}
-                </p>
-              </div>
-              <div className="flex items-center bg-yellow-50 px-3 py-2 rounded-lg">
-                <Star className="h-4 w-4 text-yellow-500 mr-1" />
-                <span className="text-sm font-medium">NIRF Rank: {college.nirfRank}</span>
+      {/* 🔥 REGIONAL COLLEGES */}
+      <div>
+        <div className="bg-lime-50 border border-lime-200 rounded-lg p-6 mb-4">
+          <h3 className="text-xl font-bold text-lime-600 mb-2">
+            Top Colleges in {formData.state}
+          </h3>
+          <p className="text-zinc-700">
+            Best options near {formData.district}
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {getRegionalColleges().map((college, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-lg font-bold">{college.name}</h4>
+                  <p className="text-zinc-600 flex items-center">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {college.location}
+                  </p>
+                </div>
+                <div className="bg-yellow-50 px-3 py-2 rounded-lg">
+                  ⭐ {college.nirfRank}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+
+      {/* 🌍 OTHER STATES */}
+      <div>
+        <div className="bg-zinc-100 border rounded-lg p-6 mb-4">
+          <h3 className="text-xl font-bold text-zinc-700 mb-2">
+            Top Colleges from Other States
+          </h3>
+          <p className="text-zinc-600">
+            Explore top institutions across India
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {getOtherStateColleges().map((college, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-lime-500">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className="text-lg font-bold">{college.name}</h4>
+                  <p className="text-zinc-600 flex items-center">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {college.location} ({college.state})
+                  </p>
+                </div>
+                <div className="bg-yellow-50 px-3 py-2 rounded-lg">
+                  ⭐ {college.nirfRank}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 
   const renderScholarships = () => (
-    <div className="space-y-6">
-      <div className="bg-lime-50 border border-lime-200 rounded-lg p-6">
-        <h3 className="text-xl font-bold text-lime-600 mb-4">Scholarship Opportunities</h3>
-        <p className="text-zinc-700">
-          Financial aid options for {formData.stream} students in {formData.state}
-        </p>
-      </div>
+    <div className="space-y-8">
 
-      <div className="grid gap-4">
-        {mockScholarships.map((scholarship, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow border-l-4 border-lime-500">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
-              <h4 className="text-lg font-bold text-zinc-800">{scholarship.name}</h4>
-              <span className="text-lime-600 font-semibold">{scholarship.amount}</span>
-            </div>
-            <p className="text-zinc-600 text-sm">
-              <strong>Eligibility:</strong> {scholarship.eligibility}
+      {/* 🟢 REGIONAL */}
+      {getRegionalScholarships().length > 0 && (
+        <div>
+          <div className="bg-lime-50 border border-lime-200 rounded-lg p-6 mb-4">
+            <h3 className="text-xl font-bold text-lime-600">
+              Scholarships in {formData.state}
+            </h3>
+            <p className="text-zinc-700">
+              Financial aid available in your region
             </p>
           </div>
-        ))}
+
+          <div className="grid gap-4">
+            {getRegionalScholarships().map((scholarship, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-lime-500">
+                <h4 className="text-lg font-bold">{scholarship.name}</h4>
+                <p className="text-lime-600 font-semibold">{scholarship.amount}</p>
+                <p className="text-sm text-zinc-600">
+                  <strong>Eligibility:</strong> {scholarship.eligibility}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 🌍 NATIONAL */}
+      <div>
+        <div className="bg-zinc-100 border rounded-lg p-6 mb-4">
+          <h3 className="text-xl font-bold text-zinc-700">
+            National Level Scholarships
+          </h3>
+          <p className="text-zinc-600">
+            Opportunities across India
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {getOtherScholarships().map((scholarship, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-yellow-400">
+              <h4 className="text-lg font-bold">{scholarship.name}</h4>
+              <p className="text-yellow-600 font-semibold">{scholarship.amount}</p>
+              <p className="text-sm text-zinc-600">
+                <strong>Eligibility:</strong> {scholarship.eligibility}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="text-center">
-        <button className="bg-lime-500 hover:bg-lime-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center mx-auto">
+      {/* 🔗 BUTTON */}
+      <div className="text-center mt-6">
+        <button
+          onClick={() => window.open("https://scholarships.gov.in/Students", "_blank")}
+          className="bg-lime-500 hover:bg-lime-600 text-white px-6 py-3 rounded-lg font-semibold flex items-center mx-auto"
+        >
           View More Scholarships
           <ExternalLink className="ml-2 h-4 w-4" />
         </button>
       </div>
+
     </div>
   );
 
@@ -400,12 +599,21 @@ const Recommendations: React.FC<RecommendationsProps> = ({ formData, onNavigate 
     <div className="min-h-screen bg-zinc-100 py-8">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h1 className="text-4xl font-bold text-lime-600 mb-4">Your Career Recommendations</h1>
           <p className="text-zinc-600 text-lg">
-            Personalized suggestions for {formData.name} - {formData.class} ({formData.stream})
+            Based on your interests, stream, and aptitude test, we recommend the best path for you
           </p>
         </div>
+
+        {/* SMART Match Highlight */}
+        {aptitudeTop && formData.interests && (
+          <div className="bg-lime-100 p-4 rounded-lg mb-8 max-w-2xl mx-auto text-center border border-lime-200">
+            <p className="text-sm text-lime-800">
+              Recommendation based on your strong <b>{aptitudeTop}</b> skills and interest in <b>{formData.interests}</b>
+            </p>
+          </div>
+        )}
 
         {/* Navigation Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-8 bg-white p-2 rounded-lg shadow-lg max-w-3xl mx-auto">
